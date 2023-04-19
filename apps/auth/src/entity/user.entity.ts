@@ -6,8 +6,8 @@ export default class UserEntity {
   id: number;
 
   @Column()
-  name: string;
+  firstname: string;
 
   @Column()
-  gender: string;
+  lastname: string;
 }

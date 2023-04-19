@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { ProfileController } from './profile.controller';
+import { ProfileService } from './profile.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import UserEntity from './entity/user.entity';
+import ProfileEntity from './profile.entity';
 import { SharedModule, SharedService } from '@app/shared';
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -24,16 +23,15 @@ import { HttpModule } from '@nestjs/axios';
         port: parseInt(configService.get('POSTGRES_PORT')),
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
-        database: configService.get('POSTGRES_USER_DB'),
+        database: configService.get('POSTGRES_PROFILE_DB'),
       }),
       inject: [ConfigService],
     }),
 
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([ProfileEntity]),
     SharedModule,
-    HttpModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, SharedService],
+  controllers: [ProfileController],
+  providers: [ProfileService, SharedService],
 })
-export class AuthModule {}
+export class ProfileModule {}
